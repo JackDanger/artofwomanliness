@@ -27,7 +27,6 @@ def file_content path
   location = File.expand_path(File.join(TMPDIR, path))
 
   directory = location.chomp(filename).chomp('/')
-  FileUtils.mkdir_p(directory)
 
   location = File.join(directory, filename)
 
@@ -38,20 +37,24 @@ def file_content path
   content = feminize retrieve(path)
   content = tag_with_analytics content
 
-  File.open(location, 'w') do |f|
-    f.write content # write to cache
+  unless path =~ /\?random/
+    FileUtils.mkdir_p(directory)
+    File.open(location, 'w') do |f|
+      f.write content # write to cache
+    end
   end
   content
 end
 
 def retrieve path
-  open("http://artofmanliness.com#{path}", {'User-Agent' => 'Firefox'}).read
+  response = open("http://artofmanliness.com#{path}", {'User-Agent' => 'Firefox'}).read
 end
 
 def feminize content
   tree = Nokogiri::HTML content
   feminize_node! tree
   content = tree.to_html
+  content = remove_community_link content
   content = add_custom_logo content
   content
 end
@@ -131,6 +134,12 @@ def add_custom_logo html
   html.sub '<div id="header">',
            '<div id="header" style="background-image: url(/header1.jpg);">'
   
+end
+
+def remove_community_link html
+  html.
+    sub('<li><a href="http://community.artofmanliness.com">Community</a></li>', '').
+    sub('<li><a href="http://community.artofmanliness.com" title="Join the AoM Community">Community</a></li>', '')
 end
 
 def tag_with_analytics html
