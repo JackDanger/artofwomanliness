@@ -1,3 +1,4 @@
+# coding: utf-8
 ## Resources
 require 'rubygems' # sorry @defunkt, this is easier
 gem 'sinatra', :version => '1.0'
@@ -35,6 +36,7 @@ def file_content path
 
 
   content = feminize retrieve(path)
+  content = tag_with_analytics content
 
   File.open(location, 'w') do |f|
     f.write content # write to cache
@@ -131,6 +133,17 @@ def add_custom_logo html
   
 end
 
-
-
-
+def tag_with_analytics html
+  html + ANALYTICS
+end
+ANALYTICS = %q{
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-331450-15']);
+_gaq.push(['_trackPageview']);
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>}
