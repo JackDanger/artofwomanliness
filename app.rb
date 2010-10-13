@@ -79,7 +79,7 @@ def feminize_node! node, indent = 0
 end
 
 def feminize_text string
-  return string if string.blank?
+  return string if string =~ /^[\s\n]*$/
 
   string = string.dup.without_accents
   ok = %Q{([\s"':;\.,\>\<\?\!])}

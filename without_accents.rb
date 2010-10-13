@@ -1,10 +1,11 @@
 # coding: utf-8
 
 # taken from http://newsgroups.derkeiler.com/Archive/Comp/comp.lang.ruby/2009-04/msg01041.html
-
+gem 'utf8_utils'
+require 'utf8_utils'
 module StringWithoutAccents
   def without_accents
-    string = ActiveSupport::Multibyte::Chars.tidy_bytes(self)
+    string = tidy_bytes
 
     {
       %w{  á à â ä ã  } => 'a',
