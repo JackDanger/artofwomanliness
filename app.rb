@@ -75,36 +75,46 @@ end
 
 def feminize_node! node, indent = 0
   node.children.each do |child|
-    if child.children.size > 0
+    if 'text' == child.name
+      # print " "*indent
+      # puts "feminizing: #{child.inspect}"
+      child.content = feminize_text!(child.content)
+    elsif child.children.size > 0
       # print " "*indent
       # puts "-> #{child.name}"
       feminize_node! child, indent + 1
-    elsif child.respond_to?(:content)
-      # print " "*indent
-      # puts "feminizing: #{child.name}"
-      child.content = feminize_text!(child.content)
     end
   end
 end
 
 def feminize_text! string
+  return string if string.blank?
+
+  ok = "([\s':;\.,\>\<])"
+
   {
-    %r{([^\w])Man$} =>      '\1Woman',
-    %r{([^\w])man$} =>      '\1woman',
-    %r{([^\w])Men$} =>      '\1Women',
-    %r{([^\w])men$} =>      '\1women',
-    %r{([^\w])Mascul$} =>   '\1Femin',
-    %r{([^\w])mascul$} =>   '\1femin',
-    %r{([^\w])Male$} =>     '\1Female',
-    %r{([^\w])male$} =>     '\1female',
-    %r{([^\w])Boy$} =>      '\1Girl',
-    %r{([^\w])boy$} =>      '\1girl',
-    %r{([^\w])His $} =>     '\1Her ',
-    %r{([^\w])his $} =>     '\1her ',
-    %r{([^\w])He $} =>      '\1She ',
-    %r{([^\w])he $} =>      '\1she '
-  }.each do |pattern, replace|
-    string.gsub! pattern, replace
+    'manly' =>      'womanly',
+    'manliness' =>  'womanliness',
+    'man' =>        'woman',
+    'men' =>        'women',
+    'masculine' =>  'feminine',
+    'male' =>       'female',
+    'boy' =>        'girl',
+    'his' =>        'her',
+    'he' =>         'she'
+  }.each do |form, feminine|
+
+    [
+      [ form, feminine],
+      [ form[0..0].upcase    + form[1..-1],
+        feminine[0..0].upcase + feminine[1..-1] ]
+    ].each do |pattern, replace|
+
+      string.gsub! %r{#{ok}#{pattern}#{ok}},  '\1'+replace+'\2'
+      string.gsub! %r{^#{pattern}#{ok}},      replace+'\1'
+      string.gsub! %r{#{ok}#{pattern}$},      '\1'+replace
+      string.gsub! %r{^#{pattern}$},          replace
+    end
   end
   string
 end

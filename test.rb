@@ -26,16 +26,24 @@ class AOWTest < Test::Unit::TestCase
     end
   end
 
-  context "feminize" do
+  context "feminize_text!" do
+    setup {
+      @feminized = feminize_text! "The Art of Manliness - by a man, as his hobby, for masculine men everywhere"
+    }
+    should "turn all girly" do
+      assert_equal "The Art of Womanliness - by a woman, as her hobby, for feminine women everywhere",
+                   @feminized
+    end
+  end
+  context "feminize!" do
     setup {
       @feminized = feminize! HTML.dup
     }
     should "have remote url in original" do
       assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
     end
-    should "replace with women path" do
-      p @feminized
-      assert @feminized =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">woman Knowledge</a></li>}
+    should "replace link content with feminized text" do
+      assert_match %r{<li><a href="http://artofmanliness.com/man-knowledge">Woman Knowledge</a></li>}, @feminized
     end
   end
 
