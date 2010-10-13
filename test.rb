@@ -14,36 +14,30 @@ class AOWTest < Test::Unit::TestCase
     Sinatra::Application
   end
 
-  context "localize" do
+  context "feminize_text" do
     setup {
-      @localized = localize! HTML.dup
-    }
-    should "have remote url in original" do
-      assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
-    end
-    should "replace with relative path" do
-      assert @localized =~ %r{<li><a href="/man-knowledge">Man Knowledge</a></li>}
-    end
-  end
-
-  context "feminize_text!" do
-    setup {
-      @feminized = feminize_text! "The Art of Manliness - by a man, as his hobby, for masculine men everywhere"
+      @feminized = feminize_text "The Art of Manliness - by a Man’s man, as his hobby, for masculine men everywhere"
     }
     should "turn all girly" do
-      assert_equal "The Art of Womanliness - by a woman, as her hobby, for feminine women everywhere",
+      assert_equal "The Art of Womanliness - by a Woman's woman, as her hobby, for feminine women everywhere",
                    @feminized
     end
   end
-  context "feminize!" do
+  context "feminize" do
     setup {
-      @feminized = feminize! HTML.dup
+      @feminized = feminize HTML.dup
     }
     should "have remote url in original" do
       assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
     end
     should "replace link content with feminized text" do
       assert_match %r{<li><a href="http://artofmanliness.com/man-knowledge">Woman Knowledge</a></li>}, @feminized
+    end
+    should "have remote url in original" do
+      assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
+    end
+    should "replace with relative path" do
+      assert @feminized =~ %r{<li><a href="/man-knowledge">Man Knowledge</a></li>}
     end
   end
 

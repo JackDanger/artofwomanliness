@@ -6,6 +6,7 @@ require 'fileutils'
 require 'nokogiri'
 require 'sinatra'
 require 'active_record'
+require 'without_accents'
 gem 'alphadecimal'
 require 'alphadecimal'
 
@@ -93,8 +94,8 @@ end
 def feminize_text string
   return string if string.blank?
 
-  string = string.dup
-  ok = "([\s’':;\.,\>\<\?\!])"
+  string = string.dup.without_accents
+  ok = "([\s':;\.,\>\<\?\!])"
 
   {
     'manly' =>      'womanly',
@@ -128,3 +129,7 @@ def add_custom_logo html
            '<div id="header" style="background-image: url(/header1.jpg);">'
   
 end
+
+
+
+
