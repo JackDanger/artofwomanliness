@@ -64,13 +64,17 @@ def feminize_node! node, indent = 0
   case node.name
   when 'text'
     # print " "*indent
-    # puts "feminizing: #{child.inspect}"
+    # puts "feminizing: #{node.content.inspect}"
     node.content = feminize_text(node.content)
+    # print " "*indent
+    # puts "out: #{node.content.inspect}"
   when 'a'
-    # puts "rewriting: #{child.attributes['href'].value}"
+    # puts "rewriting: #{node.attributes['href'].value}"
     if href = node.attributes['href']
       href.value = href.value.sub(/https?:\/\/artofmanliness.com\/?/, '/')
     end
+  else
+    # puts 'not processing: '+node.inspect
   end
 
   if node.children.size > 0
@@ -83,19 +87,20 @@ def feminize_node! node, indent = 0
 end
 
 def feminize_text string
-  return string if string =~ /^[\s\n]*$/
+  return string if ['', '\n', "\n"].include?(string.to_s)
 
   string = string.dup.without_accents
+
   ok = %Q{([\s"':;\.,\>\<\?\!-])}
 
   {
+    'man' =>         'woman',
+    'men' =>         'women',
     'manly' =>       'womanly',
     'manliness' =>   'womanliness',
     'manlier' =>     'womanlier',
     'manliest' =>    'womanliest',
     'manvotional' => 'womanvotional',
-    'man' =>         'woman',
-    'men' =>         'women',
     'masculine' =>   'feminine',
     'male' =>        'female',
     'mr.' =>         'ms.',

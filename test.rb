@@ -34,6 +34,9 @@ class AOWTest < Test::Unit::TestCase
     should "replace link content with feminized text and relative path" do
       assert_match %r{<li><a href="/man-knowledge">Woman Knowledge</a></li>}, @feminized
     end
+    should "replace link content when it's next to an image" do
+      assert_match %r{How to Apologize Like a Woman}, @feminized
+    end
   end
 
 
@@ -97,36 +100,11 @@ s1.parentNode.insertBefore(s, s1);
 						ol.footnotes{font-size:0.8em; color:#666666;}		</style> 
 		</head> 
 <body class="custom"> 
-<div id="header_area" class="full_width"> 
-<div class="page"> 
-<div id="topad">
-<!-- FM Leaderboard 1 Zone -->
-<script type='text/javascript' src='http://static.fmpub.net/zone/3323'></script>
-<!-- FM Leaderboard 1 Zone -->
-</div>	<div id="header"> 
-		<p id="logo"><a href="http://artofmanliness.com">The Art of Manliness</a></p> 
-		<h1 id="tagline">Men&#039;s Interests and Lifestyle</h1> 
-	</div> 
-<ul class="menu"> 
-<li class="tab tab-home current"><a href="http://artofmanliness.com" rel="nofollow">Home</a></li> 
-	<li class="cat-item cat-item-3"><a href="http://artofmanliness.com/category/a-mans-life/" title="View all posts filed under A Man&#039;s Life">A Man&#039;s Life</a> 
-</li> 
-	<li class="cat-item cat-item-5"><a href="http://artofmanliness.com/category/dress-grooming/" title="View all posts filed under Dress &amp; Grooming">Dress &amp; Grooming</a> 
-</li> 
-	<li class="cat-item cat-item-7"><a href="http://artofmanliness.com/category/health-sports/" title="View all posts filed under Health &amp; Sports">Health &amp; Sports</a> 
-</li> 
-	<li class="cat-item cat-item-11"><a href="http://artofmanliness.com/category/manly-skills/" title="View all posts filed under Manly Skills">Manly Skills</a> 
-</li> 
-	<li class="cat-item cat-item-12"><a href="http://artofmanliness.com/category/money-career/" title="View all posts filed under Money &amp; Career">Money &amp; Career</a> 
-</li> 
-	<li class="cat-item cat-item-65"><a href="http://artofmanliness.com/category/relationships-family/" title="View all posts filed under Relationships &amp; Family">Relationships &amp; Family</a> 
-</li> 
-<li><a href="http://community.artofmanliness.com">Community</a></li> 
-<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li> 
-</ul> 
-</div> 
-</div>
-</div>
+
+  <a href="/2009/08/23/how-to-apologize-like-a-man/" rel="bookmark">
+    <img src="http://content.artofmanliness.com/uploads/2009/thumbnails/apologizethumb.jpg" alt="How to Apologize Like a Man">
+    How to Apologize Like a Man
+  </a>
 </body>
 </html>
 EOHTML
