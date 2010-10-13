@@ -91,6 +91,7 @@ def feminize_text string
   {
     'manly' =>      'womanly',
     'manliness' =>  'womanliness',
+    'manliest' =>   'womanliest',
     'man' =>        'woman',
     'men' =>        'women',
     'masculine' =>  'feminine',
