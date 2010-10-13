@@ -23,6 +23,7 @@ module StringWithoutAccents
       %w{  ñ          } => 'n',
       %w{  Ñ          } => 'N',
       %w{  ’          } => "'",
+      %w{  ”          } => '"',
       %w{   �         } => ''
 
     }.each do |accents, normal|
