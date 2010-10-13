@@ -67,25 +67,28 @@ end
 def feminize content
   tree = Nokogiri::HTML content
   feminize_node! tree
-  content = tree.to_html
+  return tree.to_html
   content = add_custom_logo content
   content
 end
 
 def feminize_node! node, indent = 0
-  node.children.each do |child|
-    if 'text' == child.name
-      # print " "*indent
-      # puts "feminizing: #{child.inspect}"
-      child.content = feminize_text(child.content)
-    elsif 'a' == child.name
-      # puts "rewriting: #{child.attributes['href'].value}"
-      child.attributes['href'].value =
-      child.attributes['href'].value.
-            sub(/https?:\/\/artofmanliness.com\/?/, '/')
-    elsif child.children.size > 0
-      # print " "*indent
-      # puts "-> #{child.name}"
+  case node.name
+  when 'text'
+    # print " "*indent
+    # puts "feminizing: #{child.inspect}"
+    node.content = feminize_text(node.content)
+  when 'a'
+    # puts "rewriting: #{child.attributes['href'].value}"
+    node.attributes['href'].value =
+    node.attributes['href'].value.
+           sub(/https?:\/\/artofmanliness.com\/?/, '/')
+  end
+
+  if node.children.size > 0
+    node.children.each do |child|
+    # print " "*indent
+    # puts "-> #{child.name}"
       feminize_node! child, indent + 1
     end
   end

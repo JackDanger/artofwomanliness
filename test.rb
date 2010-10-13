@@ -30,14 +30,8 @@ class AOWTest < Test::Unit::TestCase
     should "have remote url in original" do
       assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
     end
-    should "replace link content with feminized text" do
-      assert_match %r{<li><a href="http://artofmanliness.com/man-knowledge">Woman Knowledge</a></li>}, @feminized
-    end
-    should "have remote url in original" do
-      assert HTML =~ %r{<li><a href="http://artofmanliness.com/man-knowledge">Man Knowledge</a></li>}
-    end
-    should "replace with relative path" do
-      assert @feminized =~ %r{<li><a href="/man-knowledge">Man Knowledge</a></li>}
+    should "replace link content with feminized text and relative path" do
+      assert_match %r{<li><a href="/man-knowledge">Woman Knowledge</a></li>}, @feminized
     end
   end
 
