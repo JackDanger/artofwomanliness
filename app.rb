@@ -134,7 +134,7 @@ def add_custom_logo html
 end
 
 def tag_with_analytics html
-  html + ANALYTICS
+  html.sub '</body>', ANALYTICS+'</body>'
 end
 ANALYTICS = %q{
 <script type="text/javascript">
