@@ -42,6 +42,7 @@ def file_content path
     File.open(location, 'w') do |f|
       f.write content # write to cache
     end
+    headers['Cache-Control'] = "public; max-age=#{24*60*60}"
   end
   content
 end
