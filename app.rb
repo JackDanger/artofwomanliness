@@ -83,7 +83,7 @@ def feminize_text string
   return string if string.blank?
 
   string = string.dup.without_accents
-  ok = "([\s':;\.,\>\<\?\!])"
+  ok = %Q{([\s"':;\.,\>\<\?\!])}
 
   {
     'manly' =>      'womanly',
@@ -93,8 +93,20 @@ def feminize_text string
     'masculine' =>  'feminine',
     'male' =>       'female',
     'boy' =>        'girl',
-    'his' =>        'her',
+    'guy' =>        'girl',
+    'dude' =>       'lady',
     'he' =>         'she',
+    'his' =>        'her',
+    'him' =>        'her',
+    'himself' =>    'herself',
+    'nobleman' =>   'noblewoman',
+    'king' =>       'queen',
+    'sissy' =>      'boyish',
+    'cowboy' =>     'cowgirl',
+    'dad' =>        'mom',
+    'daddy' =>      'mommy',
+    'dick' =>       'pussy',
+    'ex-wife' =>    'ex-husband',
     'father' =>     'mother',
     'fathers' =>    'mothers',
     'brother' =>    'sister',
