@@ -1,7 +1,7 @@
 ## Resources
 require 'rubygems' # sorry @defunkt, this is easier
 gem 'sinatra', :version => '1.0'
-require 'net/http'
+require 'open-uri'
 require 'fileutils'
 require 'nokogiri'
 require 'sinatra'
@@ -23,7 +23,9 @@ end
 def file_content path
 
   filename = File.basename(path)
-  filename = 'index.html' if filename =~ /\/$/
+  puts "filename1: #{filename}"
+  filename = "/index.html" if path =~ /\/$/
+  puts "filename: #{filename}"
 
   location = File.expand_path(File.join(TMPDIR, path))
 
@@ -31,46 +33,42 @@ def file_content path
   FileUtils.mkdir_p(directory)
 
   location = File.join(directory, filename)
+  puts "location!: #{location}"
 
   # return File.read(location) if File.exist?(location)
 
 
-  content = retrieve path
-  transform! path, content
-
+  content = transform path
+  puts "content: #{content}"
   File.open(location, 'w') do |f|
     f.write content
   end
+  content
 end
 
-def transform! path, content
+def transform path
   case path
-  when /(.jpg|.ico|.gif|.png)$/
+  when /(.jpg|.ico|.gif|.png|.css|.txt|.js)$/,
+       /(.jpg|.ico|.gif|.png|.css|.txt|.js)\?/
     puts "passthrough: #{path}"
-    content
-  when /(.css|.txt|.js)$/
-    puts "localize: #{path}"
-    localize! content
-    content
+    headers['Content-Type'] = request.env['Content-Type']
+    retrieve path
   else
     puts "feminize: #{path}"
-    localize! content
-    feminize! content
+    feminize retrieve(path)
   end
 end
 
 def retrieve path
-  Net::HTTP.get(URI.parse("http://artofmanliness.com#{path}"))
+  open("http://artofmanliness.com#{path}", {'User-Agent' => 'Firefox'}).read
 end
 
-def localize! content
-  content.gsub!("http://artofmanliness.com/", '/')
-end
-
-def feminize! content
+def feminize content
   tree = Nokogiri::HTML content
   feminize_node! tree
-  tree.to_html
+  content = tree.to_html
+  content = add_custom_logo content
+  content
 end
 
 def feminize_node! node, indent = 0
@@ -78,7 +76,12 @@ def feminize_node! node, indent = 0
     if 'text' == child.name
       # print " "*indent
       # puts "feminizing: #{child.inspect}"
-      child.content = feminize_text!(child.content)
+      child.content = feminize_text(child.content)
+    elsif 'a' == child.name
+      # puts "rewriting: #{child.attributes['href'].value}"
+      child.attributes['href'].value =
+      child.attributes['href'].value.
+            sub(/https?:\/\/artofmanliness.com\/?/, '/')
     elsif child.children.size > 0
       # print " "*indent
       # puts "-> #{child.name}"
@@ -87,10 +90,11 @@ def feminize_node! node, indent = 0
   end
 end
 
-def feminize_text! string
+def feminize_text string
   return string if string.blank?
 
-  ok = "([\s':;\.,\>\<])"
+  string = string.dup
+  ok = "([\s’':;\.,\>\<\?\!])"
 
   {
     'manly' =>      'womanly',
@@ -117,4 +121,10 @@ def feminize_text! string
     end
   end
   string
+end
+
+def add_custom_logo html
+  html.sub '<div id="header">',
+           '<div id="header" style="background-image: url(/header1.jpg);">'
+  
 end
