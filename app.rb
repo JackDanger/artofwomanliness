@@ -24,9 +24,7 @@ end
 def file_content path
 
   filename = File.basename(path)
-  puts "filename1: #{filename}"
   filename = "/index.html" if path =~ /\/$/
-  puts "filename: #{filename}"
 
   location = File.expand_path(File.join(TMPDIR, path))
 
@@ -34,30 +32,17 @@ def file_content path
   FileUtils.mkdir_p(directory)
 
   location = File.join(directory, filename)
-  puts "location!: #{location}"
 
-  # return File.read(location) if File.exist?(location)
+  # serve from cache
+  return File.read(location) if File.exist?(location)
 
 
-  content = transform path
-  puts "content: #{content}"
+  content = feminize retrieve(path)
+
   File.open(location, 'w') do |f|
-    f.write content
+    f.write content # write to cache
   end
   content
-end
-
-def transform path
-  case path
-  when /(.jpg|.ico|.gif|.png|.css|.txt|.js)$/,
-       /(.jpg|.ico|.gif|.png|.css|.txt|.js)\?/
-    puts "passthrough: #{path}"
-    headers['Content-Type'] = request.env['Content-Type']
-    retrieve path
-  else
-    puts "feminize: #{path}"
-    feminize retrieve(path)
-  end
 end
 
 def retrieve path
@@ -67,7 +52,7 @@ end
 def feminize content
   tree = Nokogiri::HTML content
   feminize_node! tree
-  return tree.to_html
+  content = tree.to_html
   content = add_custom_logo content
   content
 end
@@ -80,9 +65,9 @@ def feminize_node! node, indent = 0
     node.content = feminize_text(node.content)
   when 'a'
     # puts "rewriting: #{child.attributes['href'].value}"
-    node.attributes['href'].value =
-    node.attributes['href'].value.
-           sub(/https?:\/\/artofmanliness.com\/?/, '/')
+    if href = node.attributes['href']
+      href.value = href.value.sub(/https?:\/\/artofmanliness.com\/?/, '/')
+    end
   end
 
   if node.children.size > 0
@@ -109,7 +94,11 @@ def feminize_text string
     'male' =>       'female',
     'boy' =>        'girl',
     'his' =>        'her',
-    'he' =>         'she'
+    'he' =>         'she',
+    'father' =>     'mother',
+    'fathers' =>    'mothers',
+    'brother' =>    'sister',
+    'brothers' =>   'sisters'
   }.each do |form, feminine|
 
     [
