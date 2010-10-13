@@ -106,6 +106,7 @@ def feminize_text string
     'mr.' =>         'ms.',
     'boy' =>         'girl',
     'guy' =>         'girl',
+    'guys' =>        'girls',
     'dude' =>        'lady',
     'he' =>          'she',
     'his' =>         'her',
