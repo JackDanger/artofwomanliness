@@ -1,14 +1,11 @@
 ## Resources
 require 'rubygems' # sorry @defunkt, this is easier
 gem 'sinatra', :version => '1.0'
+require 'sinatra'
 require 'open-uri'
 require 'fileutils'
 require 'nokogiri'
-require 'sinatra'
-require 'active_record'
 require 'without_accents'
-gem 'alphadecimal'
-require 'alphadecimal'
 
 TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
               '/tmp' :
