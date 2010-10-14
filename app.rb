@@ -56,6 +56,7 @@ def feminize content
   feminize_node! tree
   content = tree.to_html
   content = remove_community_link content
+  content = remove_book_promo content
   content = add_custom_logo content
   content
 end
