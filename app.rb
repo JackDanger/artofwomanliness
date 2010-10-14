@@ -173,6 +173,10 @@ def remove_community_link html
     sub('<li><a href="http://community.artofmanliness.com" title="Join the AoM Community">Community</a></li>', '')
 end
 
+def remove_book_promo html
+  html.sub 'http://content.artofmanliness.com/uploads/bookimages/bookbanner.jpg', '/blank.gif'
+end
+
 def tag_with_analytics html
   html.sub 'UA-1066823-4', 'UA-331450-15'
 end
