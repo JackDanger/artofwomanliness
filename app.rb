@@ -91,9 +91,8 @@ def feminize_text string
 
   string = string.dup.without_accents
 
-  ok = %Q{([\s"':;\.,\>\<\?\!-])}
 
-  {
+  forms = {
     'man' =>         'woman',
     'men' =>         'women',
     'manly' =>       'womanly',
@@ -124,19 +123,38 @@ def feminize_text string
     'fathers' =>     'mothers',
     'brother' =>     'sister',
     'brothers' =>    'sisters'
-  }.each do |form, feminine|
+  }
 
-    [
-      [ form, feminine],
-      [ form[0..0].upcase    + form[1..-1],
-        feminine[0..0].upcase + feminine[1..-1] ]
-    ].each do |pattern, replace|
+  forms.each do |masculine, feminine|
+    string = string_search_replace(string, feminine, masculine, :mark)
+    string = string_search_replace(string, masculine, feminine)
+    string = string_search_replace(string, feminine, masculine, :unmark)
+  end
 
-      string.gsub! %r{#{ok}#{pattern}#{ok}},  '\1'+replace+'\2'
-      string.gsub! %r{^#{pattern}#{ok}},      replace+'\1'
-      string.gsub! %r{#{ok}#{pattern}$},      '\1'+replace
-      string.gsub! %r{^#{pattern}$},          replace
+  string
+end
+
+def string_search_replace(string, from, to, mode = nil)
+  ok = %Q{([\s"':;\.,\>\<\?\!-])}
+  [
+    [ from, to],
+    [ from[0..0].upcase  + from[1..-1],
+      to[0..0].upcase + to[1..-1] ]
+  ].each do |search, replace|
+    case mode
+    when :mark
+      replace = "[marked]#{search}[marked]"
+    when :unmark
+      search = /\[marked\]#{search}\[marked\]/
     end
+    # puts "replacing #{search} with #{replace} #{mode}"
+    # puts "--> #{string}"
+    # puts "    searching for #{search} -> #{replace}"
+    # puts "    #{string.scan(%r{#{ok}#{search}#{ok}}).inspect}"
+    string.gsub! %r{#{ok}#{search}#{ok}},  '\1'+replace+'\2'
+    string.gsub! %r{^#{search}#{ok}},      replace+'\1'
+    string.gsub! %r{#{ok}#{search}$},      '\1'+replace
+    string.gsub! %r{^#{search}$},          replace
   end
   string
 end
