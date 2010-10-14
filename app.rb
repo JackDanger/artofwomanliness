@@ -112,6 +112,7 @@ def feminize_text string
     'him' =>         'her',
     'himself' =>     'herself',
     'nobleman' =>    'noblewoman',
+    'gentleman' =>   'lady',
     'king' =>        'queen',
     'sissy' =>       'boyish',
     'cowboy' =>      'cowgirl',
@@ -147,10 +148,7 @@ def string_search_replace(string, from, to, mode = nil)
     when :unmark
       search = /\[marked\]#{search}\[marked\]/
     end
-    # puts "replacing #{search} with #{replace} #{mode}"
-    # puts "--> #{string}"
-    # puts "    searching for #{search} -> #{replace}"
-    # puts "    #{string.scan(%r{#{ok}#{search}#{ok}}).inspect}"
+
     string.gsub! %r{#{ok}#{search}#{ok}},  '\1'+replace+'\2'
     string.gsub! %r{^#{search}#{ok}},      replace+'\1'
     string.gsub! %r{#{ok}#{search}$},      '\1'+replace
