@@ -22,7 +22,7 @@ module StringWithoutAccents
       %w{  Ç          } => 'C',
       %w{  ñ          } => 'n',
       %w{  Ñ          } => 'N',
-      %w{  ’          } => "'",
+      %w{  ’ ‘ '      } => "'",
       %w{  ”          } => '"',
       %w{   �         } => ''
 
@@ -31,8 +31,8 @@ module StringWithoutAccents
         string.gsub! accent, normal
       end
     end
-
-    string
+    string.gsub! '\302\240', ' '
+    string.reverse.reverse
 
   end
 end

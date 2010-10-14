@@ -45,7 +45,8 @@ class AOWTest < Test::Unit::TestCase
       assert_match %r{This string started with Man in it and should turn into Woman}, @feminized
     end
     should "feminize even if a period is following the word" do
-      assert_match %r{I love me that cowgirl.}, @feminized
+      assert_match %r{would be the cowgirl.},
+                   feminize(open("http://artofmanliness.com/2010/09/07/3-archetypes-of-american-manliness-part-ii-the-heroic-artisan/", {'User-Agent' => 'Firefox'}).read)
     end
   end
 

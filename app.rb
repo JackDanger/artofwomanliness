@@ -126,7 +126,9 @@ def feminize_text string
     'king' =>        'queen',
     'kings' =>       'queens',
     'sissy' =>       'boyish',
+    'emasculate' =>  'defeminize',
     'cowboy' =>      'cowgirl',
+    'cowboying' =>   'cowgirling',
     'cowboys' =>     'cowgirls',
     'dad' =>         'mom',
     'daddy' =>       'mommy',
@@ -165,6 +167,7 @@ def string_search_replace(string, from, to, mode = nil)
     string.gsub! %r{^#{search}#{ok}},      replace+'\1'
     string.gsub! %r{#{ok}#{search}$},      '\1'+replace
     string.gsub! %r{^#{search}$},          replace
+
   end
   string
 end
