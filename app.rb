@@ -118,6 +118,7 @@ def feminize_text string
     'himself' =>     'herself',
     'waitress' =>    'waiter',
     'waitressed' =>  'waited',
+    'craftsman' =>   'craftswoman',
     'nobleman' =>    'noblewoman',
     'gentleman' =>   'lady',
     'gentlemen' =>   'ladies',
