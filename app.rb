@@ -113,7 +113,7 @@ def feminize_text string
     'dude' =>        'lady',
     'dudes' =>       'ladies',
     'he' =>          'she',
-    'his' =>         'her',
+    'his' =>         'hers',
     'him' =>         'her',
     'himself' =>     'herself',
     'waitress' =>    'waiter',
