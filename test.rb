@@ -44,6 +44,9 @@ class AOWTest < Test::Unit::TestCase
     should "swap genders in full document" do
       assert_match %r{This string started with Man in it and should turn into Woman}, @feminized
     end
+    should "feminize even if a period is following the word" do
+      assert_match %r{I love me that cowgirl.}, @feminized
+    end
   end
 
 
@@ -138,6 +141,7 @@ s1.parentNode.insertBefore(s, s1);
 </div>
 </div>
   <span>This string started with Woman in it and should turn into Man</span>
+  <span>I love me that cowboy.</span>
   <a href="/2009/08/23/how-to-apologize-like-a-man/" rel="bookmark">
     <img src="http://content.artofmanliness.com/uploads/2009/thumbnails/apologizethumb.jpg" alt="How to Apologize Like a Man">
     How to Apologize Like a Man

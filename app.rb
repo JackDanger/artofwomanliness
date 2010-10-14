@@ -103,6 +103,7 @@ def feminize_text string
     'manhood' =>     'womanhood',
     'manvotional' => 'womanvotional',
     'masculine' =>   'feminine',
+    'masculinity' => 'femininity',
     'male' =>        'female',
     'patriarch' =>   'matriarch',
     'mr.' =>         'ms.',
