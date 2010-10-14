@@ -142,9 +142,9 @@ def feminize_text string
   }
 
   forms.each do |masculine, feminine|
-    string = string_search_replace(string, feminine, masculine, :mark)
+    string = string_search_replace(string, feminine, masculine, :mark)    unless 'his' == masculine
     string = string_search_replace(string, masculine, feminine)
-    string = string_search_replace(string, feminine, masculine, :unmark)
+    string = string_search_replace(string, feminine, masculine, :unmark)  unless 'his' == masculine
   end
 
   string
