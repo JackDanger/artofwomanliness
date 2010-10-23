@@ -21,27 +21,10 @@ end
 
 def file_content path
 
-  filename = File.basename(path)
-  filename = "/index.html" if path =~ /\/$/
-
-  location = File.expand_path(File.join(TMPDIR, path))
-
-  directory = location.chomp(filename).chomp('/')
-
-  location = File.join(directory, filename)
-
-  # serve from cache
-  return File.read(location) if File.exist?(location)
-
-
   content = feminize retrieve(path)
   content = tag_with_analytics content
 
   unless path =~ /\?random/
-    FileUtils.mkdir_p(directory)
-    File.open(location, 'w') do |f|
-      f.write content # write to cache
-    end
     headers['Cache-Control'] = "public; max-age=#{24*60*60}"
   end
   content
