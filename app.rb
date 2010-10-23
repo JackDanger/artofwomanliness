@@ -125,16 +125,21 @@ def feminize_text string
   }
 
   forms.each do |masculine, feminine|
-    string = string_search_replace(string, feminine, masculine, :mark)    unless 'his' == masculine
-    string = string_search_replace(string, masculine, feminine)
-    string = string_search_replace(string, feminine, masculine, :unmark)  unless 'his' == masculine
+    if string =~ /#{masculine}|#{feminine}/
+      string = string_search_replace(string, feminine, masculine, :mark)    unless 'his' == masculine
+      string = string_search_replace(string, masculine, feminine)
+      string = string_search_replace(string, feminine, masculine, :unmark)  unless 'his' == masculine
+    end
   end
 
   string
 end
 
+def ok
+ @ok ||= %Q{([\s"':;\.,\>\<\?\!-])}
+end
+
 def string_search_replace(string, from, to, mode = nil)
-  ok = %Q{([\s"':;\.,\>\<\?\!-])}
   [
     [ from, to],
     [ from[0..0].upcase  + from[1..-1],
