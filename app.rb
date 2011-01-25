@@ -15,7 +15,7 @@ TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
 ## Application
 
 get '*' do
-  path = request.env['REQUEST_URI']
+  path = request.env['PATH_INFO']
   file_content path
 end
 
@@ -91,8 +91,9 @@ def feminize_text string
     'patriarch' =>   'matriarch',
     'mr.' =>         'ms.',
     'boy' =>         'girl',
-    'guy' =>         'girl',
-    'guys' =>        'girls',
+    'boys' =>        'girls',
+    'guy' =>         'gal',
+    'guys' =>        'gals',
     'dude' =>        'lady',
     'dudes' =>       'ladies',
     'he' =>          'she',
@@ -121,7 +122,10 @@ def feminize_text string
     'father' =>      'mother',
     'fathers' =>     'mothers',
     'brother' =>     'sister',
-    'brothers' =>    'sisters'
+    'brothers' =>    'sisters',
+    'Matt' =>        'Mattie',
+    'David' =>       'Davida',
+    'Paul' =>        'Paula'
   }
 
   forms.each do |masculine, feminine|
