@@ -1,5 +1,5 @@
 source "http://rubygems.org"
 
-gem 'feminizer'
+gem 'feminizer', '1.0.2'
 gem 'sinatra'
 

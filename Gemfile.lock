@@ -2,21 +2,23 @@ GEM
   remote: http://rubygems.org/
   specs:
     activesupport (3.0.3)
-    feminizer (1.0.1)
+    feminizer (1.0.2)
       activesupport
       nokogiri
-      without_accents
+      without_accents (= 0.9.0)
     nokogiri (1.4.4)
     rack (1.2.1)
     sinatra (1.1.2)
       rack (~> 1.1)
       tilt (~> 1.2)
     tilt (1.2.2)
-    without_accents (0.8.5)
+    utf8_utils (2.0.1)
+    without_accents (0.9.0)
+      utf8_utils
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  feminizer
+  feminizer (= 1.0.2)
   sinatra
