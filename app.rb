@@ -6,6 +6,7 @@ require 'feminizer'
 require 'nokogiri'
 require 'without_accents'
 
+ENV['TMPDIR'] ||= '/tmp'
 TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
               '/tmp' :
               ENV['TMPDIR'].chomp('/')) + "/artofwomanliness/"
@@ -33,7 +34,7 @@ def file_content path
 end
 
 def retrieve path
-  response = open("http://artofmanliness.com#{path}", {'User-Agent' => 'Firefox'}).read
+  open("http://artofmanliness.com#{path}", {'User-Agent' => 'Firefox'}).read
 end
 
 def add_custom_logo html
