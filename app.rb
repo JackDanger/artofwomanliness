@@ -4,7 +4,6 @@ require 'sinatra'
 require 'open-uri'
 require 'feminizer'
 require 'nokogiri'
-require 'without_accents'
 
 ENV['TMPDIR'] ||= '/tmp'
 TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
