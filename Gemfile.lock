@@ -44,10 +44,11 @@ PLATFORMS
 DEPENDENCIES
   feminizer (= 1.0.7)
   nokogiri (= 1.6.8.1)
+  rack
   rack-test
   shoulda
   sinatra
   test-unit
 
 BUNDLED WITH
-   1.13.3
+   1.13.5

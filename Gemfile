@@ -8,5 +8,6 @@ group :development, :test do
   gem 'test-unit'
   gem 'shoulda'
   gem 'rack-test'
+  gem 'rack'
 end
 
