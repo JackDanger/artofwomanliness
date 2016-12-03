@@ -12,4 +12,4 @@ RUN bundle config build.nokogiri --use-system-libraries
 RUN mkdir -p /var/www
 RUN cd /var/www && gem install bundler
 
-CMD cd /var/www && bundle && bundle exec rackup -p 8000
+CMD cd /var/www && bundle && bundle exec rackup -p 8080
