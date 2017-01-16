@@ -8,8 +8,15 @@ RUN apk add --update \
 
 # Use libxml2, libxslt a packages from alpine for building nokogiri
 RUN bundle config build.nokogiri --use-system-libraries
+RUN gem install bundler
+
+# In case we can ever build the image with some version of the gems available
+# this will speed up the CMD considerably.
+RUN mkdir -p /tmp/build
+COPY Gemfile /tmp/build
+RUN cd /tmp/build && bundle
 
 RUN mkdir -p /var/www
-RUN cd /var/www && gem install bundler
+WORKDIR /var/www
 
-CMD cd /var/www && bundle && bundle exec rackup -p 8080
+CMD bundle && bundle exec rackup -p 8080

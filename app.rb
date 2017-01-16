@@ -12,6 +12,10 @@ TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
 
 ## Application
 
+get '/_status' do
+  return '{"status": "healthy", "errors": []}'
+end
+
 get '*' do
   path = request.env['PATH_INFO']
   file_content path

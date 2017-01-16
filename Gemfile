@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source 'https://rubygems.org'
 
 gem 'nokogiri', '1.6.8.1'
 gem 'feminizer', '1.0.7'
