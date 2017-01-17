@@ -23,5 +23,5 @@ RUN cd /tmp/build && bundle install
 RUN mkdir -p /var/www
 WORKDIR /var/www
 
-EXPOSE 80
-CMD (bundle check || bundle install) && bundle exec rackup -p 80
+EXPOSE 8080
+CMD (bundle check || bundle install) && bundle exec rackup -o 0.0.0.0 -p 8080
