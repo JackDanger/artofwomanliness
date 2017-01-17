@@ -13,12 +13,12 @@ RUN bundle version
 RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle config jobs 10
 
-# In case we can ever build the image with some version of the gems available
-# this will speed up the CMD considerably.
-RUN mkdir -p /tmp/build
-COPY Gemfile /tmp/build
-COPY Gemfile.lock /tmp/build
-RUN cd /tmp/build && bundle install
+## In case we can ever build the image with some version of the gems available
+## this will speed up the CMD considerably.
+# RUN mkdir -p /tmp/build
+# COPY Gemfile /tmp/build
+# COPY Gemfile.lock /tmp/build
+# RUN cd /tmp/build && bundle install
 
 RUN mkdir -p /var/www
 WORKDIR /var/www
