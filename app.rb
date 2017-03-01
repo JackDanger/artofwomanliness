@@ -13,7 +13,7 @@ TMPDIR = (ENV['TMPDIR'] =~ /^\/var/ ?
 ## Application
 
 get '/_status' do
-  return '{"status": "healthy", "errors": []}'
+  return %Q|{"status": "healthy", "errors": [], "sha": #{sha.inspect}}|
 end
 
 get '*' do
@@ -58,4 +58,8 @@ end
 
 def tag_with_analytics html
   html.sub 'UA-1066823-4', 'UA-331450-15'
+end
+
+def sha
+  File.read('./.git/refs/heads/master').chomp
 end
