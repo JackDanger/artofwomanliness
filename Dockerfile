@@ -4,6 +4,7 @@ RUN apk add --update \
   build-base \
   libxml2-dev \
   libxslt-dev \
+  cyrus-sasl-dev \
   curl \
   memcached \
   && rm -rf /var/cache/apk/*
