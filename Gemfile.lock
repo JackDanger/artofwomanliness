@@ -14,7 +14,7 @@ GEM
     memcached (1.8.0)
     mini_portile2 (2.1.0)
     minitest (5.9.1)
-    nokogiri (1.6.8.1)
+    nokogiri (1.7.1)
       mini_portile2 (~> 2.1.0)
     power_assert (0.2.6)
     rack (1.6.4)
@@ -45,7 +45,7 @@ PLATFORMS
 DEPENDENCIES
   feminizer (= 1.0.7)
   memcached
-  nokogiri (= 1.6.8.1)
+  nokogiri
   rack
   rack-test
   shoulda

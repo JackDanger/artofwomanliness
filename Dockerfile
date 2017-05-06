@@ -11,7 +11,6 @@ RUN apk add --update \
 # Use libxml2, libxslt a packages from alpine for building nokogiri
 RUN gem install bundler
 RUN bundle version
-RUN bundle config build.nokogiri --use-system-libraries
 RUN bundle config jobs 10
 
 ## In case we can ever build the image with some version of the gems available
